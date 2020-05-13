@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, Text } from 'react-native';
 
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
@@ -18,6 +18,12 @@ import colors from '../constants/colors.js';
 const defaultStackOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === 'android' ? colors.primaryColor : ''
+  },
+  headerTintStyle: {
+    fontFamily: 'open-sans-bold'
+  },
+  headerBackTitleStyle: {
+    fontFamily: 'open-sans'
   },
   headerTintColor: Platform.OS === 'android' ? 'white' : colors.primaryColor
 };
@@ -57,7 +63,8 @@ const tabScreenConfig = {
           />
         );
       },
-      tabBarColor: colors.primaryColor
+      tabBarColor: colors.primaryColor,
+      tabBarLabel: Platform.OS === 'android' ? <Text style={{fontFamily: 'open-sans-bold'}}>Meals</Text> : 'Meals'
     }
   },
   Favorites: {
@@ -72,7 +79,8 @@ const tabScreenConfig = {
           />
         );
       },
-      tabBarColor: colors.accentColor
+      tabBarColor: colors.accentColor,
+      tabBarLabel: Platform.OS === 'android' ? <Text style={{fontFamily: 'open-sans-bold'}}>Favorites</Text> : 'Favorites'
     }
   }
 };
@@ -88,9 +96,13 @@ const MealsFavTabNavigator =
       })
     : createBottomTabNavigator(tabScreenConfig, {
         tabBarOptions: {
+          labelStyle: {
+            fontFamily: 'open-sans'
+          },
           activeTintColor: colors.accentColor
         }   
-      });
+      }
+    );
 
 const FiltersNavigator = createStackNavigator(
   {
